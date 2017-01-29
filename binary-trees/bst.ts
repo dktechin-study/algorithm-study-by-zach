@@ -63,46 +63,62 @@ export default class BST {
 		}
 	}
 
-	public find(num: number, cb: Function): any{
-		let thatNode: any = null;
-		this.inorder(this.root, function(node:any){
-			if(node.data == num){
-				thatNode = node;
-			}
-		});
-		return thatNode
+	public getMin(node: any) :any {
+		while(node.left != null){
+			node = node.left;
+		}
+		return node;
 	}
 
-	public remove(num: number): void {
-		let parentNode: any = null;
-		let prevNode: any = null;
-		let shouldRemoved: any;
-		this.preorder( this.root, (node: any) => {
-			if ( node.data == num ) {
-				shouldRemoved = node;
-				parentNode = prevNode;
+	public getMax(node:any) : any {
+		while(node.right != null){
+			node = node.right;
+		}
+		return node;
+	}
+
+	public find(num: number, cb: Function): any{
+		let currentNode: any = this.root;
+		while(currentNode != null && currentNode.data != num){
+			currentNode = num < currentNode.data ? currentNode.left : currentNode.right;
+		}
+		return currentNode || null;
+	}
+
+	private _remove(node: any, data: number) :any{
+		if(node == null){return null;}
+		if(node.data != data){
+			if(node.data > data) {
+				// log('to left');
+				node.left = this._remove(node.left, data);
+			}else{
+				// log('to right');
+				node.right = this._remove(node.right, data);
 			}
-			prevNode = node;
-		});
-
-		log("parentNode: ", parentNode);
-		log("shouldRemoved: ", shouldRemoved);
-
-		if(!shouldRemoved){
-			log('no node found');
-			return;
-		}
-
-		let isLeft: boolean = parentNode.left && parentNode.left.data == shouldRemoved.data;
-
-		if (shouldRemoved.right && shouldRemoved.left) {
-
-		} else if (shouldRemoved.left || shouldRemoved.right){
-			log('[either left or right node found]');
-			parentNode[isLeft ? 'left' : 'right'] = null;
 		} else {
-			log('[neither left or right node found]');
-			parentNode.right = parentNode.left = null;
+			if(!node.left && !node.right) {
+				// log('1. node has no children');
+				return null;
+			}
+			
+			if(!node.left){
+				// log('2. node has child to the right');
+				return node.right;
+			}
+			if (!node.right){
+				// log('2. node has child to the left');
+				return node.left;
+			}
+			// log('3. node has both children');
+			let hoisted = this.getMax(node.left);
+			hoisted.left = this._remove(node.left, hoisted.data);
+			hoisted.right = node.right;
+			// log("hoisted: ", hoisted);
+			return hoisted;
 		}
+	}
+
+	public remove(num: number): any {
+		return this._remove(this.root, num);
 	}
 }
