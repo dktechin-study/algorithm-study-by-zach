@@ -3,7 +3,7 @@ import 'colors'
 import Node from './node'
 import Log from '../util/colorLog'
 
-const log = Log('cyan');
+const log: Function = Log('cyan');
 
 export default class BST {
 	public root: any;

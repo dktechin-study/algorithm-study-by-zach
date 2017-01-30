@@ -1,32 +1,23 @@
-/**
- * Created by zach on 2017. 1. 18..
- */
-class Node {
-    constructor(data){
-        this.data = data;
-        this.next = null;
-    }
-}
+import Node from './node'
 
-
-class LinkedList {
-    constructor(...args){
+class LinkedList <T>{
+    public head: Node<T>;
+    public tail: Node<T>;
+    constructor(...args:T[]){
         this.head = null;
         this.tail = null;
 
         this.init(args);
     }
 
-    init(args){
-        if(args.length > 0 && isNaN(args[0])){
-            for(let i = 0 ; i < args.length ; i++){
-                this.push(args[i]);
-            }
+    init(args: T[]){
+        for(let i = 0 ; i < args.length ; i++){
+            this.push(args[i]);
         }
     }
 
-    push(data){
-        let node = new Node(data);
+    push(data: T){
+        let node = new Node<T>(data);
         let head = this.head;
         let tail = this.tail;
 
@@ -34,13 +25,11 @@ class LinkedList {
         this.tail = tail.next = node;
     }
 
-    get(arg){
-        switch(typeof arg){
-            case 'number': return this._getByIdx(arg);
-        }
+    get(idx: number): Node<T>{
+        return this._getByIdx(idx);
     }
 
-    _getByIdx(idx){
+    _getByIdx(idx: number): Node<T>{
         let node = this.head;
         let i = 0;
         while(i < idx){
@@ -51,19 +40,7 @@ class LinkedList {
         return node;
     }
 
-    _getByProps(obj){
-        let node = this.head;
-        while(!node.next){
-            for(let key in obj){
-                if(obj.hasOwnProperty(key)){
-                    if(node[key] === obj[key]) return node;
-                }
-            }
-            node = node.next;
-        }
-    }
-
-    pop(){
+    pop(): Node<T>{
         let node = this.head;
         let next = node.next;
         while(node.next.next){
@@ -71,23 +48,24 @@ class LinkedList {
             next = node.next;
         }
         node.next = null;
+        return next;
     }
 
-    shift(){
+    shift(): Node<T>{
         let head = this.head;
         this.head = head.next;
         head.next = null;
         return head;
     }
 
-    unshift(data){
+    unshift(data: T): Node<T>{
         let prevHead = this.head;
         this.head = new Node(data);
         this.head.next = prevHead;
         return this.head;
     }
 
-    insert(data, idx){
+    insert(data: T, idx: number): Node<T> {
         let nodeBefore = this._getByIdx(idx-1);
         let nodePushedUp = nodeBefore.next;
         let newNode = new Node(data);
@@ -97,9 +75,17 @@ class LinkedList {
         return newNode;
     }
 
-    pluck(){
-
+    map(cb: Function): any[]{
+        let node = this.head;
+        let idx = 0;
+        let arr: any[] = [];
+        while(node){
+            arr[idx] = cb(node, idx);
+            node = node.next;
+            idx++;
+        }
+        return arr;
     }
 }
 
-let arr = new LinkedList('hello', 'world', 'hi');
+export default LinkedList;
