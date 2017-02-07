@@ -1,4 +1,3 @@
-/// <reference path="../node_modules/@types/colors/index.d.ts"/>
 import 'colors'
 import Node from './node'
 import Log from '../util/colorLog'
