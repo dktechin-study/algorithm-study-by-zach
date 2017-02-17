@@ -1,40 +1,29 @@
-import { expect } from 'chai';
+import {expect} from 'chai';
 
 
-interface Hanoi {(towers: number[][], b?: number, c?: number): void}
+interface Hanoi {(n: number, a?: number, b?: number, via?: number): void
+}
 const N = 3;
-const MAX_COUNT = Math.pow(2, N);
+const MAX_COUNT = Math.pow(2, N) - 1;
 const makePlates = (n: number): number[] => {
-    if(n == 1) return [n];
-    return makePlates(n-1).concat([n]);
+    if (n == 1) return [n];
+    return makePlates(n - 1).concat([n]);
 };
 
 const towers = [makePlates(N), [], []];
 const moveLog = {
     cnt: 0,
     update: (val: number, from: number, to: number): void => {
-        this.cnt++;
         console.log(`moving plate ${val} from ${from} to ${to}`);
+        console.log('Movement Count: ', ++moveLog.cnt);
     }
 };
 
-
-const canMoveToNext = (current: number, next: number): boolean => current < next || typeof next == 'undefined';
-const canMoveToPrev = (current: number, prev: number): boolean => current > prev || typeof prev == 'undefined';
-const hasContent = (column: number[]): boolean => column.length > 0;
-const getPlate = (tower: number[]) => {
-    return tower[tower.length - 1];
+const hanoi: Hanoi = (n, from, to, via) => {
+    if(n == 0) return;
+    hanoi(n-1, from, via, to);
+    moveLog.update(n, from, to);
+    hanoi(n-1, via, to, from);
 };
 
-const hanoi: Hanoi = (towers, currentIdx = 0, nextIdx = 1) => {
-    if(!!towers[nextIdx]){
-        return;
-    }
-    let tower = towers[currentIdx];
-    let plate = getPlate(tower);
-    if(hasContent(tower)){
-        if( canMoveToNext( plate, getPlate( towers[nextIdx] ) ) ){
-
-        }
-    }
-};
+hanoi(N, 1, 3, 2);
