@@ -3,5 +3,6 @@
 // import './greedy';
 // import './self-reproducing'
 // import './block-game';
-import './tower-of-hanoi'
+// import './tower-of-hanoi'
 // import './irreducible-fraction'
+import './coin-distribution'

@@ -1,4 +1,4 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 
 
 interface Hanoi {(n: number, a?: number, b?: number, via?: number): void

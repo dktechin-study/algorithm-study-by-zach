@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run test",
+    "test:maximum-subarray": "nodemon ./maximum-subarray/index.ts --exec mocha --compilers ts:ts-node/register",
     "test": "nodemon index.ts --exec mocha --compilers ts:ts-node/register"
   },
   "repository": {
