@@ -14,17 +14,20 @@ const INPUTS = [
 const toSymmetry: (matrix: any[]) => string = (input) => {
   let output: any[] = [];
   const size = input.length;
-  const moveInputElem: ( from:number, to: number ) => void = (from, to) => {
-    let tmp = input.splice(from, 1);
-    input.splice(to, 0, tmp[0]);
+
+  const swap: (arr: any[], nth: number) => string = (arr, nth) => {
+    let input = arr.slice(0);
+    for(let i = 0; i < size ; i+=2){
+      let tmp = input[i];
+      input[i] = input[i+1];
+      input[i + 1] = tmp;
+    }
+    return input.join(' ');
   };
 
-  for(let i = 0 ; i < size ; i++){
-    moveInputElem(i, 0);
-    if(i != size - i - 1){
-      moveInputElem(size - i - 1, size - 1);
-    }
-    output.push(input.join(' '));
+
+  for(let i = 0 ; i < size ; i+=2){
+    output.push(swap(input, i));
   }
 
   return output.join('\n');

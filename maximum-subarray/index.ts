@@ -13,22 +13,17 @@ const MCS: (test: eachTest) => number = (test) => {
     const size = test.size;
     let sum: number = 0;
     let result: number = 0;
-
-    /*
-    vars arr, MAX, sum,
-    1. if(MAX + a[i] > MAX) MAX += a[i]
-    2. 
-    */
+    const MIN = 0;
 
     for (let i = 0 ; i < size ; i++){
         sum += arr[i];
-        if(sum < 0){
-            sum = 0;
+        if(sum < MIN){
+            sum = MIN;
         }else if(result < sum){
             result = sum;
         }
     }
-    return result;
+    return result || Math.max.apply(null, arr);
 };
 
 const testEach = (testCases: eachTest[]) => {
