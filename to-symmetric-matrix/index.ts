@@ -35,7 +35,7 @@ const toSymmetry: (matrix: any[]) => string = (input) => {
 
 const Main: (inputs: any) => void = (inputs) => {
   // inputs.forEach((test: any, i:number) => {
-    let test = inputs[1];
+    let test = inputs[0];
     describe(`Result of test no ${1}`, function(){
       it(`should print\n${test.result}`, function(){
         expect(toSymmetry(test.matrix)).to.equals(test.result);
