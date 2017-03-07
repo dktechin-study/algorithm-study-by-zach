@@ -1,27 +1,42 @@
 import { INPUTS, OUTPUTS, INPUT_INTERFACE } from './input';
 import { expect } from 'chai';
 
-
-const getSlope: (changeX: number, changeY: number) => number = (cx, cy) => {
-    return cy/cx;
+const getDiff: (before: number, after: number) => number = (before, after) => {
+    return after-before;
 };
+const _getSlope: (dx: number, dy: number) => number = (dx, dy) => {
+    return dy/dx;
+};
+const getSlopeByPole: (poleA: INPUT_INTERFACE, poleB: INPUT_INTERFACE ) => number = (poleA, poleB) => {
+    let beforeX = poleA.x;
+    let beforeY = poleA.h;
+    let afterX = poleB.x;
+    let afterY = poleB.h;
+    let dx = getDiff(beforeX, afterX);
+    let dy = getDiff(beforeY, afterY);
+    return _getSlope(dx, dy);
+};
+
 const fenceWrapper: (input: INPUT_INTERFACE[]) => string = (test) => {
     let result: number[] = [];
     const len = test.length;
 
-    for (let i = 0 ; i < len ; i++) {
-        let thisPole = test[i];
-        let maxPole;
-        for(let j = i + 1 ; j < len; j++){
-            let nextPole = test[j];
-            if(!maxPole){
-                maxPole = j;
-                continue;
-            }
+    for (let i = 0 ; i < len ;) {
+        result.push(i + 1);
 
-            let slope = getSlope(nextPole.x - thisPole.x, nextPole.h - thisPole.h);
-            maxPole = maxPole > slope ? maxPole :
+        let thisPole = test[i];
+        let maxPoleSlope;
+        let maxPoleIdx;
+
+        for ( let j = i + 1 ; j < len; j++ ) {
+            let nextPole = test[j];
+            let slope = getSlopeByPole(thisPole, nextPole);
+            if (!maxPoleSlope || maxPoleSlope < slope ) {
+                maxPoleSlope = slope;
+                maxPoleIdx = j;
+            }
         }
+        i = maxPoleIdx;
     }
 
 
