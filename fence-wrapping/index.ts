@@ -39,7 +39,6 @@ const fenceWrapper: (input: INPUT_INTERFACE[]) => string = (test) => {
         i = maxPoleIdx;
     }
 
-
     return result.join(' ');
 };
 
