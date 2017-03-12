@@ -10,7 +10,7 @@
     "test:to-symmetric-matrix": "nodemon ./to-symmetric-matrix/index.ts --exec mocha --compilers ts:ts-node/register",
     "test:fibonacci-modified": "nodemon ./fibonacci-modified/index.ts --exec mocha --compilers ts:ts-node/register",
     "test:fence-wrapping": "nodemon ./fence-wrapping/index.ts --exec mocha --compilers ts:ts-node/register",
-    "test:travelling-salesman": "nodemon  -x 'mocha --compilers ts:ts-node/register ./travelling-salesman/index.ts || exit 1'",
+    "test:travelling-salesman": "nodemon ./travelling-salesman/index.ts -x 'mocha --compilers ts:ts-node/register ./travelling-salesman/index.ts || true'",
     "test": "nodemon index.ts --exec mocha --compilers ts:ts-node/register"
   },
   "repository": {
