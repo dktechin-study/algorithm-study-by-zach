@@ -18,7 +18,7 @@ c. merge(S1, S2) : 두개의 스트링 S1, S2의 순서를 유지한 채 둘의 
 S ∈ merge(reverse(A), shuffle(A))의 관계를 가지는 스트링 S가 주어질 때, 
 
 
-#### 입력
+### 입력
 한줄로 들어오는(single line) 스트링 S
  
 ### 출력
